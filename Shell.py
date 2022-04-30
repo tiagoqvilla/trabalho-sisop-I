@@ -25,7 +25,7 @@ class Shell:
         self.print_menu()
         self.selection = self.get_input()
         while(self.selection not in self.options):
-            os.system('cls' if os.name == 'nt' else 'clear')
+            # os.system('cls' if os.name == 'nt' else 'clear')
             print("Digite uma opção válida!")
             self.print_menu()
             self.selection = self.get_input()

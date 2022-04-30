@@ -8,6 +8,7 @@ class InputProgram():
         self.quantum = quantum
 
     def processProgramData(self):
-        for element in self.program_data:
-            if element != ['.endcode']:
-                self.code_area.append(element)
+        self.code_area = self.program_data[self.program_data.index(
+            ['.code']) + 1: self.program_data.index(['.endcode'])]
+        self.data_area = self.program_data[self.program_data.index(
+            ['.data']) + 1: self.program_data.index(['.enddata'])]
