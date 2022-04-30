@@ -1,25 +1,44 @@
+from FileReader import FileReader
+from Shell import Shell
+
+
 def main():
-    # filename = input("Digite o nome do arquivo: ")
-    filename = "prog2.txt"
-    with open(filename) as f:
-        lines = [" ".join(line.split()) for line in f]
+    file_reader = FileReader()
+    # file_reader.read_file()
+    # print(file_reader.file_data)
+    shell = Shell()
+    option = shell.run_menu()
 
-    new_list = []
-    for line in lines:
-        l = line.split(" ")
-        new_list.append(l)
+    programs_list = []
 
-    new_lines = []
-    for l in new_list:
-        temp = []
-        for p in l:
-            if p == '#':
-                break
-            else:
-                temp.append(p)
-        new_lines.append(temp)
+    if (option == "1"):
+        pass
+    elif (option == "2"):
+        program_data = file_reader.read_file()
+        arrival_time = input("Informe o arrival time do programa: ")
+        priority = input("Informe a prioridade do programa: ")
+        quantum = input("Informe o quantum do programa: ")
+        program = {
+            "program_data": program_data,
+            "arrival_time": arrival_time,
+            "priority": priority,
+            "quantum": quantum
+        }
 
-    print(new_lines)
+        # programs_list.append(program + list(arrival_time) +
+        #                      list(priority) + list(quantum))
+        programs_list.append(program)
+        print(programs_list)
+    elif (option == "3"):
+        pass
+    elif (option == "4"):
+        pass
+    elif (option == "5"):
+        pass
+    elif (option == "6"):
+        pass
+    else:
+        pass
 
 
 if __name__ == "__main__":
