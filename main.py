@@ -1,14 +1,16 @@
 from FileReader import FileReader
 from Shell import Shell
 from InputProgram import InputProgram
+import os
 
 
 def main():
+    os.system('cls' if os.name == 'nt' else 'clear')
     shell = Shell()
     option = shell.run_menu()
-
     programs_list = []
     while (option != '1'):
+        os.system('cls' if os.name == 'nt' else 'clear')
         if (option == "2"):
             file_reader = FileReader()
             program_data = file_reader.read_file()
@@ -19,9 +21,6 @@ def main():
             input_program = InputProgram(
                 program_data, arrival_time, priority, quantum)
             input_program.processProgramData()
-
-            print(input_program)
-
             programs_list.append(input_program)
         elif (option == "3"):
             pass
