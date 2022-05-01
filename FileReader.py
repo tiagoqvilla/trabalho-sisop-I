@@ -1,3 +1,5 @@
+import os
+
 class FileReader:
 
     def __init__(self) -> None:
@@ -5,7 +7,17 @@ class FileReader:
         self.file_data = []
 
     def read_file(self):
-        self.name = input("Digite o nome do arquivo: ")
+        #self.name = input("Digite o nome do arquivo:\n> ")
+        while True:
+            os.system('cls' if os.name == 'nt' else 'clear')
+            self.name = input("Digite o nome do arquivo:\n> ")
+            if os.path.isfile(self.name):
+                break
+            else:
+                input("Arquivo não encontrado, pressione enter para continuar.")
+                continue
+
+        
         with open(self.name) as f:
             lines = [" ".join(line.split()) for line in f]
 
