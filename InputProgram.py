@@ -12,3 +12,18 @@ class InputProgram():
             ['.code']) + 1: self.program_data.index(['.endcode'])]
         self.data_area = self.program_data[self.program_data.index(
             ['.data']) + 1: self.program_data.index(['.enddata'])]
+        self.processCodeArea()
+
+    def processCodeArea(self):
+        for instr in self.code_area:
+            if len(instr) < 2:
+                continue
+            elif '#' in instr[1]:  # Instrução com valor imediato
+                instr[1] = instr[1].strip("#")
+                instr.append("I")
+            elif instr[0] in ["BRANY", "BRPOS", "BRZERO", "BRNEG"]:  # Instrução de branch
+                instr.append("B")
+            elif instr[0] == "syscall":  # Chamada de sistema
+                instr.append("S")
+            else:  # Instrução com valor definido em uma variável
+                instr.append("V")
