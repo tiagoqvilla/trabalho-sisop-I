@@ -50,7 +50,9 @@ def main():
         elif (option == "4"):
             pass
         elif (option == "5"):
-            pass
+            shell.clean_screen()
+            programs_list.clear()
+            input('A lista de programas foi resetada. Pressione qualquer tecla para voltar ao menu.')
         elif (option == "0"):
             exit()
         else:
@@ -58,7 +60,13 @@ def main():
         option = shell.run_menu()
 
     system = System(programs_list)
-    system.run()
+
+    if not programs_list:
+        shell.clean_screen()
+        input('Voce deve adicionar um programa na memória para poder iniciar o sistema. Pressione qualquer tecla para voltar o menu.')
+        option = shell.run_menu()
+    else:
+        system.run()
 
     # for program in programs_list:
     #     print(program.code_area)
