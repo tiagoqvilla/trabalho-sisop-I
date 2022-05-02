@@ -2,6 +2,7 @@ import PCB
 
 
 class System:
+    
     def __init__(self, programs, scheduler=None):
         self.acc = 0
         self.pc = 0
@@ -10,26 +11,37 @@ class System:
         self.input_programs = programs
         # self.PCB = PCB()
         self.data_variables = {}
-
-    def decoder(self):
-        pass
+        self.memory_address_table = {}
 
     def addProgramsToMemory(self):
         for program in self.input_programs:
+            program_address = []
+            
+            program_address.append(len(self.memory))
+            
             for line in program.code_area:
                 self.memory.append(line)
+                
+            program_address.append(len(self.memory)-1)
+            program_address.append(len(self.memory))
+            
             for line in program.data_area:
                 self.data_variables[line[0]] = line[1]
                 self.memory.append(line)
+                
+            program_address.append(len(self.memory)-1)
+            
+            self.memory_address_table[program.name] = program_address
 
         print(self.data_variables)
 
     def run(self):
         print("Iniciou a execução")
         self.addProgramsToMemory()
-
         while(True):
+            
             inst = self.memory[self.pc]
+            
             if inst[0] == "add":
                 print("ADD")
                 if inst[2] == 'I':
@@ -39,6 +51,7 @@ class System:
                 else:
                     pass
                 self.pc += 1
+            
             elif inst[0] == "sub":
                 print("SUB")
                 if inst[2] == 'I':
@@ -49,6 +62,7 @@ class System:
                 else:
                     pass
                 self.pc += 1
+            
             elif inst[0] == "mult":
                 if inst[2] == 'I':
                     self.acc *= int(inst[1])
@@ -57,6 +71,7 @@ class System:
                 else:
                     pass
                 self.pc += 1
+            
             elif inst[0] == "div":
                 if inst[2] == 'I':
                     self.acc /= int(inst[1])
@@ -65,6 +80,7 @@ class System:
                 else:
                     pass
                 self.pc += 1
+            
             elif inst[0] == "load":
                 print("LOAD")
                 if inst[2] == 'I':
@@ -74,6 +90,7 @@ class System:
                 else:
                     pass
                 self.pc += 1
+            
             elif inst[0] == "store":
                 print("STORE")
                 if inst[2] == 'I':
@@ -83,18 +100,18 @@ class System:
                 else:
                     pass
                 self.pc += 1
-            # elif inst[0] == 'loop:' or inst[0] == 'fim:':
-            #     self.pc += 1
-            #     pass
+
             elif inst[0] == "BRANY":
                 print("BRANY")
                 self.pc = self.memory.index([inst[1] + ":"]) + 1
+            
             elif inst[0] == "BRPOS":
                 print("BRPOS")
                 if self.acc > 0:
                     self.pc = self.memory.index([inst[1] + ":"]) + 1
                 else:
                     self.pc += 1
+            
             elif inst[0] == "BRZERO":
                 print("BRZERO")
                 if self.acc == 0:
@@ -132,3 +149,5 @@ class System:
             print(f"PC: {self.pc}")
         print(self.data_variables)
         print(self.acc)
+        print(f"MEMORY: {self.memory}")
+        print(f"MEMORY VAR TABLE: {self.memory_address_table}")

@@ -1,5 +1,6 @@
 class InputProgram():
-    def __init__(self, program_data, arrival_time, priority, quantum):
+    def __init__(self, name, program_data, arrival_time, priority, quantum):
+        self.name = name
         self.code_area = []
         self.data_area = []
         self.program_data = program_data

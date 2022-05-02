@@ -24,6 +24,9 @@ def main():
             program_data = file_reader.read_file()
 
             shell.clean_screen()
+            
+            program_name = file_reader.name
+            
             arrival_time = input("Informe o arrival time do programa:\n> ")
 
             while True:
@@ -39,8 +42,7 @@ def main():
             shell.clean_screen()
             quantum = input("Informe o quantum do programa:\n> ")
 
-            input_program = InputProgram(
-                program_data, arrival_time, priority_dict[priority], quantum)
+            input_program = InputProgram(program_name, program_data, arrival_time, priority_dict[priority], quantum)
             input_program.processProgramData()
             programs_list.append(input_program)
             input("Programa adicionado com sucesso, pressione enter para voltar ao menu.")
