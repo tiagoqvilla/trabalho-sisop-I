@@ -4,7 +4,6 @@ from InputProgram import InputProgram
 from System import System
 import os
 
-
 def main():
 
     shell = Shell()
@@ -25,7 +24,7 @@ def main():
 
             shell.clean_screen()
             
-            program_name = file_reader.name
+            program_name = file_reader.name.replace(".txt","")
             
             arrival_time = input("Informe o arrival time do programa:\n> ")
 
