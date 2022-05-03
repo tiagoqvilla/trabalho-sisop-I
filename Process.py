@@ -11,3 +11,16 @@ class Process:
         self.time_life = 0
         self.time_ready = 0
         self.waiting_io = False
+        self.context = []
+
+    def saveContext(self):
+        pass
+
+    def setStatus(self):
+        pass
+
+    def registerLifeTime(self):
+        pass
+
+    def setIOFlag(self):
+        pass

@@ -1,17 +1,21 @@
-import PCB
-
+import ProcessControlBlock
 
 class System:
     
+    PCB = ProcessControlBlock()
+
     def __init__(self, programs, scheduler=None):
         self.acc = 0
         self.pc = 0
+        self.system_memory = []
+        self.system_memory_size = 20
         self.memory = []
         self.memory_size = 1024
         self.input_programs = programs
-        # self.PCB = PCB()
         self.data_variables = {}
         self.memory_address_table = {}
+        self.system_time = 0
+    
 
     def addProgramsToMemory(self):
         for program in self.input_programs:
@@ -22,18 +26,23 @@ class System:
             for line in program.code_area:
                 self.memory.append(line)
                 
-            program_address.append(len(self.memory)-1)
+            program_address.append(len(program.code_area))
             program_address.append(len(self.memory))
             
             for line in program.data_area:
                 self.data_variables[line[0]] = line[1]
                 self.memory.append(line)
                 
-            program_address.append(len(self.memory)-1)
+            program_address.append(len(program.data_area))
             
-            self.memory_address_table[program.name] = program_address
+            self.memory_address_table[program] = program_address
 
         print(self.data_variables)
+
+    def initProgramProcess(self):
+        for program in self.input_programs:
+            self.PCB.createProcess(program,)
+            pass
 
     def run(self):
         print("Iniciou a execução")
@@ -147,6 +156,9 @@ class System:
             print(f"Dados de memória: {self.data_variables}")
             print(f"ACC: {self.acc}")
             print(f"PC: {self.pc}")
+
+            self.system_time += 1
+
         print(self.data_variables)
         print(self.acc)
         print(f"MEMORY: {self.memory}")

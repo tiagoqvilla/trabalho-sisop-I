@@ -4,12 +4,6 @@ from InputProgram import InputProgram
 from System import System
 import os
 
-'''
-    Trabalho de Sistemas Operacionais - 2022/1
-    Prof. Fabiano Passuelo Hessel
-    Autores: Henrique Brauveres, Lucas Pescador, Tiago Villa
-'''
-
 def main():
 
     shell = Shell()
@@ -18,7 +12,7 @@ def main():
     programs_list = []
 
     while (option != '1'):
-        if option == '1': # Inicia o sistema
+        if option == '1':
             pass
         elif (option == "2"):  # Adicionar programa na memória
             priority_dict = {'1': 'alta',
@@ -52,26 +46,11 @@ def main():
             programs_list.append(input_program)
             input("Programa adicionado com sucesso, pressione enter para voltar ao menu.")
 
-        elif (option == "3"): # Define o algoritmo de escalonamento
-            scheduling_algorithm_dict = {
-                '1': 'prioridade sem preempção',
-                '2': 'prioridade com preempção',
-                '3': 'round robin'
-            }
-            while True:
-                shell.clean_screen()
-                scheduling_algorithm = input(
-                    "Informe o algoritmo de escalonamento do programa:\n[1] prioridade sem preempção\n[2] prioridade com preempção\n[3] round robin\n> ")
-                if scheduling_algorithm in scheduling_algorithm_dict:
-                    input(f"Algoritmo de escalonamento {scheduling_algorithm_dict[scheduling_algorithm]} definido com sucesso! Pressione enter para continuar")
-                    break
-                else:
-                    input("Opção invalida, pressione enter para continuar.")
-                continue
+        elif (option == "3"):
             pass
-        elif (option == "4"): # Remove um programa da lista
+        elif (option == "4"):
             pass
-        elif (option == "5"): # Reseta as configurações
+        elif (option == "5"):
             shell.clean_screen()
             programs_list.clear()
             input('A lista de programas foi resetada. Pressione qualquer tecla para voltar ao menu.')
@@ -90,6 +69,8 @@ def main():
     else:
         system.run()
 
+    # for program in programs_list:
+    #     print(program.code_area)
 
 
 if __name__ == "__main__":
