@@ -1,8 +1,6 @@
-import ProcessControlBlock
+from ProcessControlBlock import ProcessControlBlock as PCB
 
 class System:
-    
-    PCB = ProcessControlBlock()
 
     def __init__(self, programs, scheduler=None):
         self.acc = 0
@@ -15,6 +13,7 @@ class System:
         self.data_variables = {}
         self.memory_address_table = {}
         self.system_time = 0
+        self.PCB = PCB()
     
 
     def addProgramsToMemory(self):
@@ -38,15 +37,23 @@ class System:
             self.memory_address_table[program] = program_address
 
         print(self.data_variables)
+        print(self.memory_address_table)
 
     def initProgramProcess(self):
         for program in self.input_programs:
-            self.PCB.createProcess(program,)
-            pass
+            self.PCB.createProcess(program, self.memory_address_table[program])
+
+        
+            
 
     def run(self):
         print("Iniciou a execução")
         self.addProgramsToMemory()
+        self.initProgramProcess()
+        
+        # TODO adicionar aqui retorno do processo escalonado    
+
+        
         while(True):
             
             inst = self.memory[self.pc]
@@ -54,9 +61,9 @@ class System:
             if inst[0] == "add":
                 print("ADD")
                 if inst[2] == 'I':
-                    self.acc += int(inst[1])
+                    self.acc += int(float(inst[1]))
                 elif inst[2] == 'V':
-                    self.acc += int(self.data_variables[inst[1]])
+                    self.acc += int(float(self.data_variables[inst[1]]))
                 else:
                     pass
                 self.pc += 1
@@ -64,28 +71,28 @@ class System:
             elif inst[0] == "sub":
                 print("SUB")
                 if inst[2] == 'I':
-                    self.acc -= int(inst[1])
+                    self.acc -= int(float(inst[1]))
                 elif inst[2] == 'V':
-                    print(type(int(self.data_variables[inst[1]])))
-                    self.acc -= int(self.data_variables[inst[1]])
+                    print(type(float(self.data_variables[inst[1]])))
+                    self.acc -= int(float(self.data_variables[inst[1]]))
                 else:
                     pass
                 self.pc += 1
             
             elif inst[0] == "mult":
                 if inst[2] == 'I':
-                    self.acc *= int(inst[1])
+                    self.acc *= int(float(inst[1]))
                 elif inst[2] == 'V':
-                    self.acc *= int(self.data_variables[inst[1]])
+                    self.acc *= int(float(self.data_variables[inst[1]]))
                 else:
                     pass
                 self.pc += 1
             
             elif inst[0] == "div":
                 if inst[2] == 'I':
-                    self.acc /= int(inst[1])
+                    self.acc /= int(float(inst[1]))
                 elif inst[2] == 'V':
-                    self.acc /= int(self.data_variables[inst[1]])
+                    self.acc /= int(float(self.data_variables[inst[1]]))
                 else:
                     pass
                 self.pc += 1
@@ -93,9 +100,9 @@ class System:
             elif inst[0] == "load":
                 print("LOAD")
                 if inst[2] == 'I':
-                    self.acc = int(inst[1])
+                    self.acc = int(float(inst[1]))
                 elif inst[2] == 'V':
-                    self.acc = int(self.data_variables[inst[1]])
+                    self.acc = int(float(self.data_variables[inst[1]]))
                 else:
                     pass
                 self.pc += 1
@@ -147,7 +154,7 @@ class System:
                     self.pc += 1
 
                 elif inst[1] == '2':
-                    self.acc = int(input(">"))
+                    self.acc = float(input(">"))
                     self.pc += 1
 
             else:
