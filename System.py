@@ -1,5 +1,6 @@
 from ProcessControlBlock import ProcessControlBlock as PCB
 
+
 class System:
 
     def __init__(self, programs, scheduler=None):
@@ -14,32 +15,31 @@ class System:
         self.memory_address_table = {}
         self.system_time = 0
         self.PCB = PCB()
-    
 
     def addProgramsToMemory(self):
         for program in self.input_programs:
             program_address = []
-            
+
             program_address.append(len(self.memory))
-            
+
             for line in program.code_area:
                 self.memory.append(line)
-                
+
             program_address.append(len(program.code_area))
             program_address.append(len(self.memory))
-            
+
             for line in program.data_area:
                 self.data_variables[line[0]] = line[1]
                 self.memory.append(line)
-                
+
             program_address.append(len(program.data_area))
-            
+
             self.memory_address_table[program] = program_address
 
         print(self.data_variables)
         print(self.memory_address_table)
 
-    def initProgramProcess(self,program):
+    def initProgramProcess(self, program):
         self.PCB.createProcess(program, self.memory_address_table[program])
 
     def checkNewArrival(self, program):
@@ -49,27 +49,28 @@ class System:
         else:
             #print(f"ARRIVAL TIME DIFERENTE DO SISTEMA\nAT {program.arrival_time} != ST {self.system_time}")
             return False
-    
+
     def run(self):
         print("Iniciou a execução")
         self.addProgramsToMemory()
-        
-        # TODO adicionar aqui retorno do processo escalonado    
-        
+
         while(True):
-            
+
             # Criação de Processo no timing \/
             for program in self.input_programs:
                 if self.checkNewArrival(program) == True:
                     self.initProgramProcess(program)
-                    input(f"Novo processo criado:\nprograma: {program.name}\nsystem time: {self.system_time}\n> ")
+                    input(
+                        f"Novo processo criado:\nprograma: {program.name}\nsystem time: {self.system_time}\n> ")
                 else:
                     continue
-            
+
+            self.PCB.schdPriorityNoPreemption()
+
             # Fetch da instrução \/
             #inst = self.memory[pcb.running.contexto[0]]
             inst = self.memory[self.pc]
-            
+
             # Decodificação da Instrução
             if inst[0] == "add":
                 print("ADD")
@@ -80,7 +81,7 @@ class System:
                 else:
                     pass
                 self.pc += 1
-            
+
             elif inst[0] == "sub":
                 print("SUB")
                 if inst[2] == 'I':
@@ -91,7 +92,7 @@ class System:
                 else:
                     pass
                 self.pc += 1
-            
+
             elif inst[0] == "mult":
                 if inst[2] == 'I':
                     self.acc *= int(float(inst[1]))
@@ -100,7 +101,7 @@ class System:
                 else:
                     pass
                 self.pc += 1
-            
+
             elif inst[0] == "div":
                 if inst[2] == 'I':
                     self.acc /= int(float(inst[1]))
@@ -109,7 +110,7 @@ class System:
                 else:
                     pass
                 self.pc += 1
-            
+
             elif inst[0] == "load":
                 print("LOAD")
                 if inst[2] == 'I':
@@ -119,7 +120,7 @@ class System:
                 else:
                     pass
                 self.pc += 1
-            
+
             elif inst[0] == "store":
                 print("STORE")
                 if inst[2] == 'I':
@@ -133,14 +134,14 @@ class System:
             elif inst[0] == "BRANY":
                 print("BRANY")
                 self.pc = self.memory.index([inst[1] + ":"]) + 1
-            
+
             elif inst[0] == "BRPOS":
                 print("BRPOS")
                 if self.acc > 0:
                     self.pc = self.memory.index([inst[1] + ":"]) + 1
                 else:
                     self.pc += 1
-            
+
             elif inst[0] == "BRZERO":
                 print("BRZERO")
                 if self.acc == 0:
