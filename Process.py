@@ -11,7 +11,7 @@ class Process:
         self.time_life = 0
         self.time_ready = 0
         self.waiting_io = False
-        self.context = []
+        self.context = [code_ptr, 0]
 
     def saveContext(self):
         pass

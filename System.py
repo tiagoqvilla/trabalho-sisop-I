@@ -39,25 +39,38 @@ class System:
         print(self.data_variables)
         print(self.memory_address_table)
 
-    def initProgramProcess(self):
-        for program in self.input_programs:
-            self.PCB.createProcess(program, self.memory_address_table[program])
+    def initProgramProcess(self,program):
+        self.PCB.createProcess(program, self.memory_address_table[program])
 
-        
-            
-
+    def checkNewArrival(self, program):
+        if program.arrival_time == self.system_time:
+            #print(f"ARRIVAL TIME IGUAL AO DO SISTEMA\nAT {program.arrival_time} == ST {self.system_time}")
+            return True
+        else:
+            #print(f"ARRIVAL TIME DIFERENTE DO SISTEMA\nAT {program.arrival_time} != ST {self.system_time}")
+            return False
+    
     def run(self):
         print("Iniciou a execução")
         self.addProgramsToMemory()
-        self.initProgramProcess()
         
         # TODO adicionar aqui retorno do processo escalonado    
-
         
         while(True):
             
+            # Criação de Processo no timing \/
+            for program in self.input_programs:
+                if self.checkNewArrival(program) == True:
+                    self.initProgramProcess(program)
+                    input(f"Novo processo criado:\nprograma: {program.name}\nsystem time: {self.system_time}\n> ")
+                else:
+                    continue
+            
+            # Fetch da instrução \/
+            #inst = self.memory[pcb.running.contexto[0]]
             inst = self.memory[self.pc]
             
+            # Decodificação da Instrução
             if inst[0] == "add":
                 print("ADD")
                 if inst[2] == 'I':

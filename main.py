@@ -32,7 +32,7 @@ def main():
             
             program_name = file_reader.name.replace(".txt","")
             
-            arrival_time = input("Informe o arrival time do programa:\n> ")
+            arrival_time = int(input("Informe o arrival time do programa:\n> "))
 
             while True:
                 shell.clean_screen()
