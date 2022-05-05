@@ -3,7 +3,7 @@ from InputProgram import InputProgram
 
 class ProcessControlBlock:
     def __init__(self):
-        self.running_id = 0
+        self.running = None
         self.scheduler = 0
         self.queue_ready = []
         self.queue_blocked = []
@@ -22,7 +22,7 @@ class ProcessControlBlock:
         process = Process(id, code_ptr, code_size, data_ptr, data_size, priority)
 
         self.process_list.append(process)
-        self.queue_ready.append(process)
+        self.addQueueReady(process)
 
 
     def schdRoundRobin(self):
@@ -35,4 +35,24 @@ class ProcessControlBlock:
     def schdPriorityWithPreemption(self):
         pass
     
+    def addQueueReady(self, process):
+        self.queue_ready.append(process)
+        process.status = "ready"
     
+    def addQueueBlocked(self, process):
+        self.queue_blocked.append(process)
+        process.status = "blocked"
+        
+    def addQueueFinished(self, process):
+        self.queue_finished.append(process)
+        process.status = "finished"
+        
+    def rmvQueueReady(self, process):
+        self.queue_ready.remove(process)
+    
+    def rmvQueueBlocked(self, process):
+        self.queue_blocked.remove(process)
+    
+    def setRunning(self, process):
+        self.running_id = process
+        process.status = "running"
