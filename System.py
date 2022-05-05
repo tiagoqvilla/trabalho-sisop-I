@@ -38,7 +38,7 @@ class System:
             self.memory_address_table[program] = program_address
 
         print(self.data_variables)
-        print(self.memory_address_table)
+        #print(self.memory_address_table)
 
     def initProgramProcess(self, program):
         self.PCB.createProcess(program, self.memory_address_table[program])
@@ -61,8 +61,7 @@ class System:
             for program in self.input_programs:
                 if self.checkNewArrival(program) == True:
                     self.initProgramProcess(program)
-                    input(
-                        f"Novo processo criado:\nprograma: {program.name}\nsystem time: {self.system_time}\n> ")
+                    #input(f"Novo processo criado:\nprograma: {program.name}\nsystem time: {self.system_time}\n> ")
                 else:
                     continue
 
@@ -74,56 +73,58 @@ class System:
 
             # Decodificação da Instrução
             if inst[0] == "add":
-                print("ADD")
+                print(inst)
                 if inst[2] == 'I':
-                    self.acc += int(float(inst[1]))
+                    self.acc += int(inst[1])
                 elif inst[2] == 'V':
-                    self.acc += int(float(self.data_variables[inst[1]]))
+                    self.acc += int(self.data_variables[inst[1]])
                 else:
                     pass
                 self.pc += 1
 
             elif inst[0] == "sub":
-                print("SUB")
+                print(inst)
                 if inst[2] == 'I':
-                    self.acc -= int(float(inst[1]))
+                    self.acc -= int(inst[1])
                 elif inst[2] == 'V':
-                    print(type(float(self.data_variables[inst[1]])))
-                    self.acc -= int(float(self.data_variables[inst[1]]))
+                    #print(type(float(self.data_variables[inst[1]])))
+                    self.acc -= int(self.data_variables[inst[1]])
                 else:
                     pass
                 self.pc += 1
 
             elif inst[0] == "mult":
+                print(inst)
                 if inst[2] == 'I':
-                    self.acc *= int(float(inst[1]))
+                    self.acc *= int(inst[1])
                 elif inst[2] == 'V':
-                    self.acc *= int(float(self.data_variables[inst[1]]))
+                    self.acc *= int(self.data_variables[inst[1]])
                 else:
                     pass
                 self.pc += 1
 
             elif inst[0] == "div":
+                print(inst)
                 if inst[2] == 'I':
-                    self.acc /= int(float(inst[1]))
+                    self.acc /= int(inst[1])
                 elif inst[2] == 'V':
-                    self.acc /= int(float(self.data_variables[inst[1]]))
+                    self.acc /= int(self.data_variables[inst[1]])
                 else:
                     pass
                 self.pc += 1
 
             elif inst[0] == "load":
-                print("LOAD")
+                print(inst)
                 if inst[2] == 'I':
-                    self.acc = int(float(inst[1]))
+                    self.acc = int(inst[1])
                 elif inst[2] == 'V':
-                    self.acc = int(float(self.data_variables[inst[1]]))
+                    self.acc = int(self.data_variables[inst[1]])
                 else:
                     pass
                 self.pc += 1
 
             elif inst[0] == "store":
-                print("STORE")
+                print(inst)
                 if inst[2] == 'I':
                     self.data_variables[inst[1]] = str(self.acc)
                 elif inst[2] == 'V':
@@ -133,18 +134,18 @@ class System:
                 self.pc += 1
 
             elif inst[0] == "BRANY":
-                print("BRANY")
+                print(inst)
                 self.pc = self.memory.index([inst[1] + ":"]) + 1
 
             elif inst[0] == "BRPOS":
-                print("BRPOS")
+                print(inst)
                 if self.acc > 0:
                     self.pc = self.memory.index([inst[1] + ":"]) + 1
                 else:
                     self.pc += 1
 
             elif inst[0] == "BRZERO":
-                print("BRZERO")
+                print(inst)
                 if self.acc == 0:
 
                     self.pc = self.memory.index([inst[1] + ":"]) + 1
@@ -152,7 +153,7 @@ class System:
                     self.pc += 1
 
             elif inst[0] == "BRNEG":
-                print("BRNEG")
+                print(inst)
                 if self.acc < 0:
                     self.pc = self.memory.index([inst[1] + ":"]) + 1
                 else:
@@ -160,29 +161,31 @@ class System:
 
             elif inst[0] == 'syscall':
                 time_blocked = randint(10, 20)
-                print("SYSCALL")
+                print(inst)
                 if inst[1] == '0':
                     print('Programa finalizado!')
                     break
 
                 elif inst[1] == '1':
-                    print(f"Acumulador: {self.acc}")
+                    print(f"\nPRINT: {self.acc}\n")
                     self.pc += 1
 
                 elif inst[1] == '2':
-                    self.acc = float(input(">"))
+                    self.acc = int(input(">"))
                     self.pc += 1
 
             else:
+                print(inst)
                 self.pc += 1
 
-            print(f"Dados de memória: {self.data_variables}")
+            #print(f"Dados de memória: {self.data_variables}")
             print(f"ACC: {self.acc}")
             print(f"PC: {self.pc}")
 
             self.system_time += 1
 
-        print(self.data_variables)
-        print(self.acc)
-        print(f"MEMORY: {self.memory}")
-        print(f"MEMORY VAR TABLE: {self.memory_address_table}")
+        #print(self.data_variables)
+        print(f"ACC: {self.acc}")
+        print(f"PC: {self.pc}")
+        #print(f"MEMORY: {self.memory}")
+        #print(f"MEMORY VAR TABLE: {self.memory_address_table}")

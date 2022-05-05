@@ -43,8 +43,8 @@ class ProcessControlBlock:
 
         self.queue_ready.sort(key=lambda p: p.priority)
 
-        for process in self.queue_ready:
-            print(f"Processo: {process.id}, Prioridade: {process.priority}")
+        # for process in self.queue_ready:
+        #     print(f"Processo: {process.id}, Prioridade: {process.priority}")
 
         return current_process
 
