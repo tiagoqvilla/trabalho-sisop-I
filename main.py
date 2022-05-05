@@ -73,9 +73,7 @@ def main():
                     input("Opção invalida, pressione enter para continuar.")
                 continue
             pass
-        elif (option == "4"):  # Remove um programa da lista
-            pass
-        elif (option == "5"):  # Reseta as configurações
+        elif (option == "4"):  # Reseta as configurações
             shell.clean_screen()
             programs_list.clear()
             input(

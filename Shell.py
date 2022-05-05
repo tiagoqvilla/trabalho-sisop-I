@@ -1,5 +1,6 @@
 import os
 
+
 class Shell:
 
     def __init__(self) -> None:
@@ -7,8 +8,7 @@ class Shell:
             "1": "Iniciar sistema",
             "2": "Adicionar programa na memória",
             "3": "Definir o algoritmo de escalonamento",
-            "4": "Remover um programa",
-            "5": "Resetar configurações",
+            "4": "Resetar configurações",
             "0": "Sair"
         }
         self.selection = "-1"

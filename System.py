@@ -1,3 +1,4 @@
+from random import randint
 from ProcessControlBlock import ProcessControlBlock as PCB
 
 
@@ -158,6 +159,7 @@ class System:
                     self.pc += 1
 
             elif inst[0] == 'syscall':
+                time_blocked = randint(10, 20)
                 print("SYSCALL")
                 if inst[1] == '0':
                     print('Programa finalizado!')
